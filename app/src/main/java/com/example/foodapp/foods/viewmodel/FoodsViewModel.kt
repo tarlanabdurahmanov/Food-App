@@ -30,7 +30,6 @@ class FoodsViewModel @Inject constructor(
     val viewState: State<ViewState> = _viewState
 
 
-
     fun getFoodsForCategory(categoryName: String) {
         viewModelScope.launch {
             try {
@@ -46,3 +45,18 @@ class FoodsViewModel @Inject constructor(
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -18,50 +18,39 @@ import com.example.foodapp.foods.FoodsScreen
 import com.example.foodapp.ui.theme.FoodAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            FoodAppTheme {
-                Surface(color = MaterialTheme.colors.background) {
-                    FoodApp()
-                }
-            }
+            FoodAppTheme { Surface(color = MaterialTheme.colors.background) { FoodApp() } }
         }
     }
 }
-
 
 @Composable
 fun FoodApp() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "categories") {
         composable("categories") {
-            CategoryScreen { category ->
-                navController.navigate("foods/${category}")
-            }
+            CategoryScreen { category -> navController.navigate("foods/${category}") }
         }
-        composable("foods/{category}", arguments = listOf(navArgument("category") {
-            type = NavType.StringType
-        })) {
-            val categoryStr = remember {
-                it.arguments?.getString("category")
-            }
+        composable(
+            "foods/{category}",
+            arguments = listOf(navArgument("category") { type = NavType.StringType })
+        ) {
+            val categoryStr = remember { it.arguments?.getString("category") }
             FoodsScreen(category = categoryStr) { mealId ->
                 navController.navigate("detail/${mealId}")
             }
         }
 
-        composable("detail/{mealid}", arguments = listOf(navArgument("mealid") {
-            type = NavType.StringType
-        })) {
-            val mealStrId = remember {
-                it.arguments?.getString("mealid")
-            }
+        composable(
+            "detail/{mealid}",
+            arguments = listOf(navArgument("mealid") { type = NavType.StringType })
+        ) {
+            val mealStrId = remember { it.arguments?.getString("mealid") }
             DetailScreen(mealId = mealStrId)
         }
     }
-//    FoodsScreen()
 }
